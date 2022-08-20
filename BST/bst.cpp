@@ -4,6 +4,7 @@ using namespace std;
 
 struct Node {
     int data;
+    int count;
     struct Node* left;
     struct Node* right;
 };
@@ -11,6 +12,7 @@ struct Node {
 struct Node* createNode(int item) {
     struct Node* node = (struct Node*)malloc(sizeof(struct Node));    
 
+    node->count = 1;
     node->data = item;
     node->right = node->left = NULL;
 
@@ -21,7 +23,7 @@ void inorder(struct Node *root) {
     if (root != NULL) {
         inorder(root->left);
 
-        cout << root->data << endl;
+        cout << "Value: " << root->data << " Counter: " << root->count << endl;
 
         inorder(root->right);
     }
@@ -30,6 +32,11 @@ void inorder(struct Node *root) {
 struct Node* insertNode(struct Node* root, int item) {
     if (root == NULL)
         return createNode(item);
+
+    if (item == root->data) {
+        root->count++;
+        return root;
+    }
 
     if (item < root->data)
         root->left = insertNode(root->left, item);
@@ -100,20 +107,16 @@ int findSmallest(struct Node* root) {
 int main() {
     struct Node* root = NULL;
     root = insertNode(root, 34);
-
     root = insertNode(root, 20);
     root = insertNode(root, 19);
     root = insertNode(root, 1);
     root = insertNode(root, 1);
     root = insertNode(root, 34);
     root = insertNode(root, 59);
+    root = insertNode(root, 59);
+    root = insertNode(root, 59);
     root = insertNode(root, 10);
 
-    cout << "Smallest element: " << findSmallest(root) << endl;
-    cout << "Largest element: " << findLargest(root) << endl;
-
-    cout << "Tree values (inorder): " << endl;
-
-    inorder(root);
+    cout << root->data << endl;
     return 0;
 }
