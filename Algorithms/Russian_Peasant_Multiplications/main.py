@@ -8,7 +8,7 @@ def exponentiation(base, exp):
     # with each step base(n + 1) = base(n) ** 2
     # exp(n + 1) = exp(n) // 2
 
-    while (exp > 1):
+    while (exp > 0):
         # if exp is odd then multiply base to running product
         if (exp % 2 != 0):
             running_product *= base
@@ -22,4 +22,4 @@ def exponentiation(base, exp):
 
 
 if __name__ == '__main__':
-    print(exponentiation(4, 2))
+    print(exponentiation(4, 29))

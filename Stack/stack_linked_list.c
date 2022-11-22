@@ -44,7 +44,7 @@ void print_stack(struct Node* root) {
         do {
             printf("%d\n", root->elem);
             root = root->next;
-        } while (root->next != NULL);
+        } while (root != NULL);
     } else {
         printf("No elements in stack\n");
     }
@@ -72,10 +72,9 @@ void pop(struct Node* root) {
 int main() {
     struct Node* root = init_node(34);
 
-    push(root, 50);
-    push(root, 50);
-    push(root, 50);
-    push(root, 50);
+    for (int i = 0; i <= 100; ++i) {
+        push(root, i);
+    }
 
     print_stack(root);
 
