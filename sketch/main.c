@@ -2,25 +2,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Node {
-    int data;
-    struct Node *next;
-};
-
 int main() {
-    // pointers
-
     int a = 34;
     int *ptr = &a;
-        
-    printf("Without using pointer: \n");
-    printf("%p\n", &a);
-    printf("%d\n", *(&a));
 
-    printf("With using pointer: \n");
-    printf("%p\n", ptr);
-    printf("%d\n", *ptr);
-    printf("Address of the pointer: %p\n", &ptr);
+    int **ptrb = &ptr;
+
+    printf("Value stored in a: %d\n", **ptrb);
+    printf("Address of the ptrb: %p\n", &ptrb);
+    printf("Value ptrb holds: %p\n", ptrb);
 
     return 0;
 }
