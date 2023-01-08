@@ -67,7 +67,6 @@ void insert_after(struct Node** head, int element, int after) {
 void delete_node(struct Node** head, int element) {
     struct Node* temp = (*head);
 
-
     while (temp->data != element) {
         temp = temp->next;
     }
@@ -85,7 +84,10 @@ void delete_node(struct Node** head, int element) {
 
     // if it is in the middle
     if (temp->prev != NULL) {
+        // need to update next as well as previous of the node
         temp->prev->next = temp->next;
+        // reverse link
+        temp->next->prev = temp->prev;
     }
 
     free(temp);
