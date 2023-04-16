@@ -72,11 +72,16 @@ void pop(struct Node* root) {
 int main() {
     struct Node* root = init_node(34);
 
-    for (int i = 0; i <= 100; ++i) {
+    for (int i = 0; i <= 10; ++i) {
         push(root, i);
     }
 
     print_stack(root);
+
+    pop(root);
+
+    print_stack(root);
+
 
     return 0;
 }
