@@ -24,7 +24,6 @@ Node* insert_at_beg(Node* last, int data) {
     Node* newNode = createNode(data);
 
     newNode->next = last->next;
-
     last->next = newNode;
 
     return last;
@@ -82,6 +81,18 @@ void display(Node* last) {
     printf("\n");
 }
 
+int length(Node* last) {
+  Node* curr = last->next;
+  int length = 1;
+
+  while (curr != last) {
+    length++;
+    curr = curr->next;
+  }
+
+  return length;
+}
+
 int main() {
     Node* last = NULL;
 
@@ -98,6 +109,8 @@ int main() {
     last = insert_at_end(last, 40);
 
     display(last);
+
+    printf("Length: %d\n", length(last));
 
     return 0;
 }

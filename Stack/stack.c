@@ -19,7 +19,7 @@ void push(int e) {
         printf("Stack is full\n");
         return;
     }
-    stack[top++] = e;
+    stack[++top] = e;
 }
 
 void print_stack() {
@@ -34,7 +34,6 @@ int main() {
     push(34);
     push(34);
     push(34);
-    pop();
 
     print_stack();
 

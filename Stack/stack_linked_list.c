@@ -2,86 +2,97 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Node {
-    int elem;
+typedef struct Node {
+    int value;
     struct Node* next;
-};
+} Node;
 
-struct Node* top;
+Node* init_node(int value) {
+  Node* node = malloc(sizeof(*node));
+  node->value = value;
+  node->next = NULL;
 
-struct Node* init_node(int i) {
-    struct Node* node = (struct Node*)malloc(sizeof(struct Node));
-
-    node->elem = i;
-
-    node->next = NULL;
-
-    return node;
+  return node;
 }
 
-void push(struct Node* root, int elem) {
-    if (root == NULL) {
-        struct Node* root = (struct Node*)malloc(sizeof(struct Node));
-        root->elem = elem;
-        top = root;
-        return;
-    }
+Node* push(Node* top, int value) {
+  // O(1)
+  if (top == NULL)
+    return init_node(value);
 
-    while (root->next != NULL) {
-        root = root->next;
-    }
+  Node* node = init_node(value);
+  node->next = top;
+  top = node;
 
-    root->next = (struct Node*)malloc(sizeof(struct Node));
-    root->next->elem = elem;
-    root->next->next = NULL;
-
-    top = root->next;
+  return top;
 }
 
-void print_stack(struct Node* root) {
-    if (root != NULL) {
-        printf("Stack elements: \n");
-        do {
-            printf("%d\n", root->elem);
-            root = root->next;
-        } while (root != NULL);
-    } else {
-        printf("No elements in stack\n");
-    }
+Node* pop(Node* top) {
+  // O(1)
+  if (top == NULL) 
+    return NULL;
+
+  Node* temp = top;
+  top = top->next;
+  free(temp);
+
+  return top;
 }
 
-void pop(struct Node* root) {
-    if (root->next == NULL) {
-        // there is only one element in the list
-        root = NULL;
-        return;
-    }
+void print_block(int value, int is_top) {
+  int totalWidth = 8; 
+  int numDigits = snprintf(NULL, 1, "%d", value); 
 
-    // to the last second element
-    while (root->next->next != NULL) {
-        root = root->next;
-    }
+  int leftSpace = (totalWidth - numDigits - 2) / 2; 
+  int rightSpace = totalWidth - numDigits - 2 - leftSpace; 
 
-    // deallocate memory
-    free(root->next);
+  if (is_top)
+    printf("|%*s%d%*s| <- top\n", leftSpace, "", value, rightSpace, "");
+  else 
+    printf("|%*s%d%*s|\n", leftSpace, "", value, rightSpace, ""); 
+}
 
-    top = root;
-    top->next = NULL;
+
+int pop_with_return(Node** top) {
+  if (*top == NULL) 
+    return -1;
+
+  Node* temp = *top;
+  *top = (*top)->next;
+  int value = temp->value;
+
+  free(temp);
+
+  return value;
+}
+
+void print_stack(Node* top) {
+  if (top == NULL) {
+    printf("No elements\n");
+    return;
+  }
+
+  printf("Stack elements: (Top -> Bottom)\n");
+  print_block(top->value, 1);
+  top = top->next;
+  while (top != NULL) {
+    print_block(top->value, 0);
+    top = top->next;
+  }
 }
 
 int main() {
-    struct Node* root = init_node(34);
+  Node* top = NULL;
 
-    for (int i = 0; i <= 10; ++i) {
-        push(root, i);
-    }
+  for (int i = 0; i < 20; i += 1)
+    top = push(top , i);
 
-    print_stack(root);
+  print_stack(top);
+  printf("Popped: %d\n", pop_with_return(&top));
+  printf("Popped: %d\n", pop_with_return(&top));
+  printf("Popped: %d\n", pop_with_return(&top));
+  printf("Popped: %d\n", pop_with_return(&top));
+  print_stack(top);
 
-    pop(root);
-
-    print_stack(root);
-
-
-    return 0;
+  return 0;
 }

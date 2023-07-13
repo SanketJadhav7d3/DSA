@@ -127,5 +127,7 @@ int main() {
 
     print_list(head);
 
+    printf("%lu\n", sizeof(*head)); // 24
+
     return 0;
 }
